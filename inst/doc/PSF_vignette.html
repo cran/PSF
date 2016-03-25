@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Neeraj Dhanraj Bokde (neerajdhanraj@gmail.com)" />
+
+<meta name="date" content="2016-03-23" />
+
+<title>PSF : R Package for Pattern Sequence based Forecasting Algorithm</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">PSF : R Package for Pattern Sequence based Forecasting Algorithm</h1>
+<h4 class="author"><em>Neeraj Dhanraj Bokde (<a href="mailto:neerajdhanraj@gmail.com">neerajdhanraj@gmail.com</a>)</em></h4>
+<h4 class="date"><em>2016-03-23</em></h4>
+
+</div>
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The Algorithm Pattern Sequence based Forecasting (PSF) was first proposed by <code>Martinez Alvarez, et al., 2008</code> and then modified and suggested improvement by <code>Martinez Alvarez, et al., 2011</code>. The technical detailes are mentioned in referenced articles. PSF algorithm consists of various statistical operations like:</p>
+<ul>
+<li>Data Normalization/ Denormalization</li>
+<li>Calculation of optimum Window size (W)</li>
+<li>Calculation of optimum cluster size (k)</li>
+<li>Pattern Sequence based Forecasting</li>
+<li>RMSE/MAE Calculation, etc..</li>
+</ul>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<p>This section demonstrates the Functions used in PSF along with the examples. The data used is from <code>iris</code> data set, provided by R.</p>
+<div id="install-library" class="section level3">
+<h3>Install library</h3>
+<p>Download the Package and install with instruction:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PSF)</code></pre></div>
+</div>
+<div id="pred_for_w-data_in-w-k-next_val" class="section level3">
+<h3><code>pred_for_w (data_in, w, k, next_val)</code></h3>
+<p>This Function predict the values for given data, Window size (<code>W</code>) and Cluster size (<code>k</code>).</p>
+<ul>
+<li><code>data_in</code> as Input data, in any format (data matrix data frame or vector). All variables should be numeric and NA values will get removed while execution.</li>
+<li><code>w</code> as window size (Can be obtained with function <code>optimum_w</code>)</li>
+<li><code>k</code> as cluster size for Kmeans (Can be obtained with function <code>optimum_k</code>)</li>
+<li><code>next_val</code> as Integer number. It states the number of predicted values to be obtained.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1], `w` = 3, `k` = 4 and `next_val` = 5</span>
+<span class="kw">pred_for_w</span>(iris[<span class="dv">1</span>], <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</code></pre></div>
+<pre><code>## [1] 7.082143 6.271795 5.623684 5.623684 5.623684</code></pre>
+<p>This function returns the predicted values and corresponding graph plot. The graph region with Red Color is the original data, whereas the region with Blue color is corresponding to the predicted values.</p>
+</div>
+<div id="pred_for_w_plot-data_in-w-k-next_val" class="section level3">
+<h3><code>pred_for_w_plot (data_in, w, k, next_val)</code></h3>
+<p>This Function is similar to <code>pred_for_w()</code>, except this function is able to plot the predicted values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1], `w` = 3, `k` = 4 and `next_val` = 5</span>
+<span class="kw">pred_for_w_plot</span>(iris[<span class="dv">1</span>], <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+<pre><code>## $Predicted_Values
+## [1] 7.082143 6.271795 5.623684 5.623684 5.623684
+## 
+## $Plot
+## NULL</code></pre>
+</div>
+<div id="optimum_w-data_in-next_val" class="section level3">
+<h3><code>optimum_w (data_in, next_val)</code></h3>
+<p>This Function calculates the optimum value of Window size <code>w</code> to be used in prediction function such that the <code>RMSE</code> and <code>MAE</code> values should be minimum.</p>
+<ul>
+<li><code>data_in</code> as Input data, in any format (data matrix data frame or vector). All variables should be numeric and NA values will get removed while execution.</li>
+<li><code>next_val</code> as Integer number. Such that last <code>next_val</code> numbers will be used for test of prediction accuracy.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1] and `next_val` = 5</span>
+<span class="kw">optimum_w</span>(iris[<span class="dv">1</span>], <span class="dv">5</span>)</code></pre></div>
+<pre><code>## $Optimum_W
+## [1] 1
+## 
+## $RMSE_Values
+## [1] 0.3059953
+## 
+## $Prediction
+##   Original_Data W_size.1
+## 1           6.7 6.461538
+## 2           6.3 6.461538
+## 3           6.5 6.461538
+## 4           6.2 6.461538
+## 5           5.9 6.461538</code></pre>
+<p>This Function returns the optimum value for <code>w</code>, it’s corresponding <code>RMSE</code> values, prediction values and plots. The predicted values in <code>optimum_w()</code> function are different than those obtained in <code>pred_for_w()</code>, since, <code>optimum_w()</code> function removes last <code>next_val</code> numbers of integers and predicts that much values and compare them with original data.</p>
+</div>
+<div id="optimum_k-data_in" class="section level3">
+<h3><code>optimum_k (data_in)</code></h3>
+<p>This Function is to determine the Optimum value of Cluster size (<code>K</code>) based on Average silhouette method.</p>
+<ul>
+<li><code>data_in</code> as Input data, in any format (data matrix data frame or vector). All variables should be numeric and NA values will get removed while execution.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1] </span>
+<span class="kw">optimum_k</span>(iris[<span class="dv">1</span>])</code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<p>This Function returns K value, an integer as optimum number clusters.</p>
+</div>
+<div id="auto_psf-data_in-next_val" class="section level3">
+<h3><code>AUTO_PSF (data_in, next_val)</code></h3>
+<p>This Function takes input data and autogenerate optimum Window size (<code>W</code>) and cluster size (<code>K</code>) and predicts the <code>next_val</code> numbers of future values</p>
+<ul>
+<li><code>data_in</code> as Input data, in any format (data matrix data frame or vector). All variables should be numeric and NA values will get removed while execution.</li>
+<li><code>next_val</code> as Integer number. It states the number of predicted values to be obtained.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1] and next_val = 3</span>
+<span class="kw">AUTO_PSF</span>(iris[<span class="dv">1</span>],<span class="dv">3</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+<pre><code>## $Predicted_Values
+## [1] 6.215625 5.073913 5.772222</code></pre>
+<p>This function calculate suitable values of <code>w</code> and <code>k</code> such that mean erroe between original and predicted data should be minimum. And ultimately, forecasts the series with PSF algorithm methodology.</p>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Martínez-Álvarez, F., Troncoso, A., Riquelme, J.C. and Ruiz, J.S.A., 2008, December. LBF: A labeled-based forecasting algorithm and its application to electricity price time series. In Data Mining, 2008. ICDM’08. Eighth IEEE International Conference on (pp. 453-461). IEEE.</p>
+<p>Martinez Alvarez, F., Troncoso, A., Riquelme, J.C. and Aguilar Ruiz, J.S., 2011. Energy time series forecasting based on pattern sequence similarity. Knowledge and Data Engineering, IEEE Transactions on, 23(8), pp.1230-1243.</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
