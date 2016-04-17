@@ -88,7 +88,8 @@ optimum_w <- function(data_in,next_val)
   rmse_val
   mae_val
 
-  perfect_w <- which.min(rmse_val)
+  #perfect_w <- which.min(rmse_val)
+  perfect_w <- max(which(rmse_val == min(rmse_val)))
   output <- list("Optimum_W"= perfect_w,"RMSE_Values"=rmse_val,"Prediction"=sv)
   #return(perfect_w)
   return(output)
