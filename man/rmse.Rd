@@ -10,7 +10,7 @@ rmse(diff)
 \item{diff}{is the difference between Original data and Predicted data}
 }
 \value{
-rmse_val as Root Mean Square Error
+returns Root Mean Square Error values
 }
 \description{
 takes difference between Original data and Predicted data as input

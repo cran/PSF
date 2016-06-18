@@ -10,7 +10,7 @@ mae(diff)
 \item{diff}{is the difference between Original data and Predicted data}
 }
 \value{
-mae_val as Mean Absolute Error
+returns Mean Absolute Error values
 }
 \description{
 takes difference between Original data and Predicted data as input

@@ -1,8 +1,8 @@
 Package: PSF
 Type: Package
 Title: Algorithm for Pattern Sequence Based Forecasting
-Version: 0.1.1
-Date: 2016-03-16
+Version: 0.2.1
+Date: 2016-06-18
 Author: Neeraj Bokde
 Maintainer: Neeraj Bokde <neerajdhanraj@gmail.com>
 Description: Various functions in Pattern Sequence Based Forecasting (PSF) takes
@@ -12,6 +12,8 @@ Description: Various functions in Pattern Sequence Based Forecasting (PSF) takes
     labeling of samples from database. The labels associated with samples are then
     used for forecasting the future behaviour of time series data. The further
     technical details and references regarding PSF are discussed in Vignette.
+BugReports: https://github.com/neerajdhanraj/PSF/issues
+URL: http://www.neerajbokde.com
 License: GPL (>= 2)
 Imports: cluster
 LazyData: TRUE
@@ -19,6 +21,6 @@ RoxygenNote: 5.0.1
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2016-04-17 13:42:15 UTC; NEERAJ
+Packaged: 2016-06-18 15:51:54 UTC; NEERAJ
 Repository: CRAN
-Date/Publication: 2016-04-17 19:39:53
+Date/Publication: 2016-06-18 18:46:03

@@ -2,7 +2,7 @@
 #'
 #' takes difference between Original data and Predicted data as input
 #' @param diff is the difference between Original data and Predicted data
-#' @return rmse_val as Root Mean Square Error
+#' @return returns Root Mean Square Error values
 #' @export
 #' @examples
 #' ## Generate 100 random numbers within some limits
@@ -23,7 +23,7 @@ rmse <- function(diff)
 #'
 #' takes difference between Original data and Predicted data as input
 #' @param diff is the difference between Original data and Predicted data
-#' @return mae_val as Mean Absolute Error
+#' @return returns Mean Absolute Error values
 #' @export
 #' @examples
 #' ## Generate 100 random numbers within some limits
