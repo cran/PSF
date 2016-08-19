@@ -10,56 +10,38 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="Neeraj Dhanraj Bokde (neerajdhanraj@gmail.com)" />
+<meta name="author" content="Neeraj Bokde, Gualberto Asencio-Cortes and Francisco Martinez-Alvarez" />
 
-<meta name="date" content="2016-06-18" />
+<meta name="date" content="2016-08-19" />
 
-<title>PSF : R Package for Pattern Sequence based Forecasting Algorithm</title>
+<title>Introduction to Pattern Sequence based Forecasting (PSF) algorithm</title>
 
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
 </style>
 
 
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20700px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%201%2E35%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%2010px%3B%0A%20%20padding%3A%204px%3B%0A%20%20width%3A%20400px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%20%7B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%200%2E25em%200%2E75em%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%20%20%20%20%2F%2A%20Wrap%20long%20lines%20%2A%2F%0A%7D%0Apre%20%7B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200px%2010px%200px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0A%20%20font%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%200px%3B%0A%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%3A%201px%20solid%20%23DDDDDD%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -68,15 +50,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<h1 class="title toc-ignore">PSF : R Package for Pattern Sequence based Forecasting Algorithm</h1>
-<h4 class="author"><em>Neeraj Dhanraj Bokde (<a href="mailto:neerajdhanraj@gmail.com">neerajdhanraj@gmail.com</a>)</em></h4>
-<h4 class="date"><em>2016-06-18</em></h4>
+<h1 class="title toc-ignore">Introduction to Pattern Sequence based Forecasting (PSF) algorithm</h1>
+<h4 class="author"><em>Neeraj Bokde, Gualberto Asencio-Cortes and Francisco Martinez-Alvarez</em></h4>
+<h4 class="date"><em>2016-08-19</em></h4>
 
 
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>The Algorithm Pattern Sequence based Forecasting (PSF) was first proposed by <code>Martinez Alvarez, et al., 2008</code> and then modified and suggested improvement by <code>Martinez Alvarez, et al., 2011</code>. The technical detailes are mentioned in referenced articles. PSF algorithm consists of various statistical operations like:</p>
+<p>The Algorithm Pattern Sequence based Forecasting (PSF) was first proposed by Martinez Alvarez, et al., 2008 and then modified and suggested improvement by Martinez Alvarez, et al., 2011. The technical detailes are mentioned in referenced articles. PSF algorithm consists of various statistical operations like:</p>
 <ul>
 <li>Data Normalization/ Denormalization</li>
 <li>Calculation of optimum Window size (W)</li>
@@ -85,89 +67,124 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>RMSE/MAE Calculation, etc..</li>
 </ul>
 </div>
-<div id="examples" class="section level2">
-<h2>Examples</h2>
-<p>This section demonstrates the Functions used in PSF along with the examples. The data used is from <code>iris</code> data set, provided by R.</p>
-<div id="install-library" class="section level3">
-<h3>Install library</h3>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>This section discusses about the examples to introduce the use of the PSF package and to compare it with auto.arima() and ets() functions, which are well accepted functions in the R community working over time series forecasting techniques. The data used in this example are ’nottem’ and ’sunspots’ which are the standard time series dataset available in R. The ’nottem’ dataset is the average air temperatures at Nottingham Castle in degrees Fahrenheit, collected for 20 years, on monthly basis.</p>
+<p>Similarly, ’sunspots’ dataset is mean relative sunspot numbers from 1749 to 1983, measured on monthly basis. First of all, the psf() function from PSF package is used to forecast the future values. For both datasets, all the recorded values except for the final year are considered as training data, and the last year is used for testing purposes. The predicted values for final year with psf() function for both datasets are now discussed.</p>
+<div id="install-library" class="section level4">
+<h4>Install library</h4>
 <p>Download the Package and install with instruction:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PSF)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PSF)</code></pre>
 </div>
-<div id="pred_for_w-data_in-w-k-next_val" class="section level3">
-<h3><code>pred_for_w (data_in, w, k, next_val)</code></h3>
-<p>This Function predict the values for given data, Window size (<code>W</code>) and Cluster size (<code>k</code>).</p>
-<ul>
-<li><code>data_in</code> as Input data, in any format (data matrix data frame or vector). All variables should be numeric and NA values will get removed while execution.</li>
-<li><code>w</code> as window size (Can be obtained with function <code>optimum_w</code>)</li>
-<li><code>k</code> as cluster size for Kmeans (Can be obtained with function <code>optimum_k</code>)</li>
-<li><code>next_val</code> as Integer number. It states the number of predicted values to be obtained.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1], `w` = 3, `k` = 4 and `next_val` = 5</span>
-<span class="kw">pred_for_w</span>(iris[<span class="dv">1</span>], <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</code></pre></div>
-<pre><code>## [1] 7.082143 6.271795 5.623684 5.623684 5.623684</code></pre>
-<p>This function returns the predicted values and corresponding graph plot. The graph region with Red Color is the original data, whereas the region with Blue color is corresponding to the predicted values.</p>
-</div>
-<div id="pred_for_w_plot-data_in-w-k-next_val" class="section level3">
-<h3><code>pred_for_w_plot (data_in, w, k, next_val)</code></h3>
-<p>This Function is similar to <code>pred_for_w()</code>, except this function is able to plot the predicted values.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1], `w` = 3, `k` = 4 and `next_val` = 5</span>
-<span class="kw">pred_for_w_plot</span>(iris[<span class="dv">1</span>], <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</code></pre></div>
-<p><img src="data:image/png;base64,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" alt /><!-- --></p>
-<pre><code>## $Predicted_Values
-## [1] 7.082143 6.271795 5.623684 5.623684 5.623684
+<div id="prediction-results-for-nottem-dataset-with-psf-function." class="section level4">
+<h4>Prediction results for ’nottem’ dataset with psf() function.</h4>
+<pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">psf</span>(<span class="dt">data =</span> nottem, <span class="dt">n.ahead =</span> <span class="dv">12</span>)
+a</code></pre>
+<pre><code>## $predictions
+##  [1] 38.97692 38.71538 42.49231 46.32308 52.91538 57.97692 61.87692
+##  [8] 60.19231 57.03846 49.42308 43.23846 40.21538
 ## 
-## $Plot
-## NULL</code></pre>
-</div>
-<div id="optimum_w-data_in-next_val" class="section level3">
-<h3><code>optimum_w (data_in, next_val)</code></h3>
-<p>This Function calculates the optimum value of Window size <code>w</code> to be used in prediction function such that the <code>RMSE</code> and <code>MAE</code> values should be minimum.</p>
-<ul>
-<li><code>data_in</code> as Input data, in any format (data matrix data frame or vector). All variables should be numeric and NA values will get removed while execution.</li>
-<li><code>next_val</code> as Integer number. Such that last <code>next_val</code> numbers will be used for test of prediction accuracy.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1] and `next_val` = 5</span>
-<span class="kw">optimum_w</span>(iris[<span class="dv">1</span>], <span class="dv">5</span>)</code></pre></div>
-<pre><code>## $Optimum_W
-## [1] 1
+## $k
+## [1] 2
 ## 
-## $RMSE_Values
-## [1] 0.3059953
+## $w
+## [1] 1</code></pre>
+</div>
+<div id="prediction-results-for-sunspots-dataset-with-psf-function." class="section level4">
+<h4>Prediction results for ’sunspots’ dataset with psf() function.</h4>
+<pre class="sourceCode r"><code class="sourceCode r">b &lt;-<span class="st"> </span><span class="kw">psf</span>(<span class="dt">data =</span> sunspots, <span class="dt">n.ahead =</span> <span class="dv">48</span>)
+b</code></pre>
+<pre><code>## $predictions
+##  [1] 52.625000 49.275000 48.050000 56.975000 45.675000 45.950000 37.550000
+##  [8] 45.050000 46.000000 45.200000 39.325000 39.750000 34.100000 27.766667
+## [15] 27.533333 36.700000 35.933333 36.233333 26.066667 28.666667 27.366667
+## [22] 30.166667 23.000000 21.033333 21.366667 18.666667 20.133333 11.766667
+## [29] 21.833333 17.700000 24.666667 29.366667  8.833333 14.866667 32.000000
+## [36] 22.266667 16.225000 19.100000 14.200000 13.275000 20.350000 16.575000
+## [43] 10.475000 21.475000 17.425000 27.075000 30.925000 28.325000
 ## 
-## $Prediction
-##   Original_Data W_size.1
-## 1           6.7 6.461538
-## 2           6.3 6.461538
-## 3           6.5 6.461538
-## 4           6.2 6.461538
-## 5           5.9 6.461538</code></pre>
-<p>This Function returns the optimum value for <code>w</code>, it’s corresponding <code>RMSE</code> values, prediction values and plots. The predicted values in <code>optimum_w()</code> function are different than those obtained in <code>pred_for_w()</code>, since, <code>optimum_w()</code> function removes last <code>next_val</code> numbers of integers and predicts that much values and compare them with original data.</p>
+## $k
+## [1] 2
+## 
+## $w
+## [1] 10</code></pre>
+<p>To represent the prediction performance in plot format, the psf_plot() function is used as shown in the following code.</p>
 </div>
-<div id="optimum_k-data_in" class="section level3">
-<h3><code>optimum_k (data_in)</code></h3>
-<p>This Function is to determine the Optimum value of Cluster size (<code>K</code>) based on Average silhouette method.</p>
-<ul>
-<li><code>data_in</code> as Input data, in any format (data matrix data frame or vector). All variables should be numeric and NA values will get removed while execution.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1] </span>
-<span class="kw">optimum_k</span>(iris[<span class="dv">1</span>])</code></pre></div>
-<pre><code>## [1] 10</code></pre>
-<p>This Function returns K value, an integer as optimum number clusters.</p>
+<div id="plot-for-nottem-dataset" class="section level4">
+<h4>Plot for ‘nottem’ dataset</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">psf_plot</span>(<span class="dt">data =</span> nottem, <span class="dt">predictions =</span> a$predictions)</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
-<div id="auto_psf-data_in-next_val" class="section level3">
-<h3><code>AUTO_PSF (data_in, next_val)</code></h3>
-<p>This Function takes input data and autogenerate optimum Window size (<code>W</code>) and cluster size (<code>K</code>) and predicts the <code>next_val</code> numbers of future values</p>
-<ul>
-<li><code>data_in</code> as Input data, in any format (data matrix data frame or vector). All variables should be numeric and NA values will get removed while execution.</li>
-<li><code>next_val</code> as Integer number. It states the number of predicted values to be obtained.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Considering `data_in` = iris[1] and next_val = 3</span>
-<span class="kw">AUTO_PSF</span>(iris[<span class="dv">1</span>],<span class="dv">3</span>)</code></pre></div>
-<p><img src="data:image/png;base64,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" alt /><!-- --></p>
-<pre><code>## $Predicted_Values
-## [1] 5.546154 5.546154 5.772222</code></pre>
-<p>This function calculate suitable values of <code>w</code> and <code>k</code> such that mean erroe between original and predicted data should be minimum. And ultimately, forecasts the series with PSF algorithm methodology.</p>
+<div id="plot-for-sunspots-dataset" class="section level4">
+<h4>Plot for ‘sunspots’ dataset</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">psf_plot</span>(<span class="dt">data =</span> sunspots, <span class="dt">predictions =</span> b$predictions)</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
+</div>
+<div id="comparison-of-psf-with-auto.arima-and-ets-functions" class="section level2">
+<h2>Comparison of <code>psf()</code> with <code>auto.arima()</code> and <code>ets()</code> functions:</h2>
+<p>Example below shows the comparisons for <code>psf()</code>, <code>auto.arima()</code> and <code>ets()</code> functions when using the Root Mean Square Error (RMSE) parameter as metric, for ’sunspots’ dataset. In order to avail more accurate and robust comparison results, error values are calculated for 5 times and the mean value of error values for methods under comparison are also shown. These values clearly state that ‘psf()’ function is able to outperform the comparative time series prediction methods. Additionally, the reader might want to refer to the results published in the original work Martinez Alvarez et al. (2011), in which it was shown that PSF outperformed many different methods when applied to electricity prices and demand forecasting.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PSF)
+<span class="kw">library</span>(forecast)</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: 'zoo'</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre><code>## Loading required package: timeDate</code></pre>
+<pre><code>## This is forecast 7.1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">warn=</span>-<span class="dv">1</span>)
+  
+## Consider data `sunspots` with removal of last years's readings
+<span class="co"># Training Data</span>
+x &lt;-<span class="st"> </span>sunspots[<span class="dv">1</span>:<span class="dv">2772</span>]
+
+<span class="co"># Test Data</span>
+y &lt;-<span class="st"> </span>sunspots[<span class="dv">2773</span>:<span class="dv">2820</span>]
+
+PSF &lt;-<span class="st"> </span><span class="ot">NULL</span>
+ARIMA &lt;-<span class="st"> </span><span class="ot">NULL</span>
+ETS &lt;-<span class="st"> </span><span class="ot">NULL</span>
+
+for(i in <span class="dv">1</span>:<span class="dv">5</span>)
+{
+  <span class="kw">set.seed</span>(i)
+  
+  <span class="co"># for PSF</span>
+  a &lt;-<span class="st"> </span><span class="kw">psf</span>(<span class="dt">data =</span> x, <span class="dt">n.ahead =</span> <span class="dv">48</span>)$predictions
+  
+  <span class="co"># for ARIMA</span>
+  b &lt;-<span class="st"> </span><span class="kw">forecast</span>(<span class="kw">auto.arima</span>(x), <span class="dv">48</span>)$mean
+  
+  <span class="co"># for ets</span>
+  c &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">forecast</span>(<span class="kw">ets</span>(x), <span class="dv">48</span>)$mean)
+  
+  ## For Error Calculations
+  <span class="co"># Error for PSF</span>
+  PSF[i] &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((y -<span class="st"> </span>a)^<span class="dv">2</span>))
+  <span class="co"># Error for ARIMA</span>
+  ARIMA[i] &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((y -<span class="st"> </span>b)^<span class="dv">2</span>))
+  <span class="co"># Error for ETS</span>
+  ETS[i] &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((y -<span class="st"> </span>c)^<span class="dv">2</span>))
+
+}
+
+## Error values for PSF
+  PSF</code></pre>
+<pre><code>## [1] 61.08512 61.08512 61.08512 61.08512 61.08512</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">mean</span>(PSF)</code></pre>
+<pre><code>## [1] 61.08512</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">## Error values for ARIMA
+  ARIMA</code></pre>
+<pre><code>## [1] 103.0719 103.0719 103.0719 103.0719 103.0719</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">mean</span>(ARIMA)</code></pre>
+<pre><code>## [1] 103.0719</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">## Error values for ETS
+  ETS</code></pre>
+<pre><code>## [1] 70.66554 70.66554 70.66554 70.66554 70.66554</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">mean</span>(ETS)</code></pre>
+<pre><code>## [1] 70.66554</code></pre>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
