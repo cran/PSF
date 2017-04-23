@@ -1,5 +1,6 @@
 export(psf)
-export(psf_plot)
+S3method(plot, psf)
+S3method(predict, psf)
 import("data.table")
 importFrom("cluster", "silhouette")
 importFrom("graphics", "plot", "points")

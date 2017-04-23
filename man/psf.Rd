@@ -2,14 +2,12 @@
 % Please edit documentation in R/psf.R
 \name{psf}
 \alias{psf}
-\title{Forecasting of univariate time series using the PSF algorithm}
+\title{Train a PSF model from an univariate time series using the PSF algorithm}
 \usage{
-psf(data, n.ahead, k = seq(2, 10), w = seq(1, 10), cycle = 24)
+psf(data, k = seq(2, 10), w = seq(1, 10), cycle = 24)
 }
 \arguments{
 \item{data}{Input univariate time series, in any format (time series (ts), vector, matrix, list, data frame).}
-
-\item{n.ahead}{The number of predicted values to be obtained.}
 
 \item{k}{The number of clusters, or a vector of candidate values to search for the optimum automatically.}
 
@@ -18,19 +16,22 @@ psf(data, n.ahead, k = seq(2, 10), w = seq(1, 10), cycle = 24)
 \item{cycle}{The number of values that conform a cycle in the time series (e.g. 24 hours per day). Only used when input data is not in time series format.}
 }
 \value{
-A list with 3 elements:
-\item{predictions}{Vector with the resulting predictions}
+An object of class 'psf' with 7 elements:
+\item{original_series}{Original time series stored to be used internally to build further plots.}
+\item{train_data}{Adapted and normalized internal time series used to train the PSF model.}
 \item{k}{Number of clusters used}
 \item{w}{Window size used}
+\item{cycle}{Determined cycle for the input time series.}
+\item{dmin}{Minimum value of the input time series (used to denormalize internally further predictions).}
+\item{dmax}{Maximum value of the input time series (used to denormalize internally further predictions).}
 }
 \description{
-Takes an univariate time series and the prediction horizon as inputs.
+Takes an univariate time series as input. Optionally, specific internal parameters of the PSF algorithm can be also specified.
 }
 \examples{
-## Forecast the next 12 values of the univariate time series: nottem (package:datasets).
-psf(nottem, 12)
+## Train a PSF model from the univariate time series 'nottem' (package:datasets).
+p <- psf(nottem)
 
-## Forecast the next 48 values of the univariate time series: sunspots (package:datasets).
-psf(sunspots, 48)
+## Train a PSF model from the univariate time series 'sunspots' (package:datasets).
+p <- psf(sunspots)
 }
-
