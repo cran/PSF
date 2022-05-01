@@ -5,6 +5,9 @@
 #' @param n.ahead The number of predicted values to be obtained.
 #' @param \dots Other parameters will be ignored.
 #' @return Vector with the resulting predictions
+#' 
+#' @importFrom stats kmeans
+#' 
 #' @export
 #' @examples
 #' ## Train a PSF model from the univariate time series 'nottem' (package:datasets).

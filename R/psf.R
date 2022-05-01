@@ -13,6 +13,10 @@
 #' \item{cycle}{Determined cycle for the input time series.}
 #' \item{dmin}{Minimum value of the input time series (used to denormalize internally further predictions).}
 #' \item{dmax}{Maximum value of the input time series (used to denormalize internally further predictions).}
+#' 
+#' @import data.table
+#' @importFrom stats is.ts kmeans
+#' 
 #' @export
 #' @examples
 #' ## Train a PSF model from the univariate time series 'nottem' (package:datasets).

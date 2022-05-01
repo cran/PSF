@@ -1,0 +1,24 @@
+citHeader("To cite PSF in publications use:")
+
+citEntry(
+    entry    = "Article",
+    title    = "{PSF: Introduction to R Package for Pattern Sequence Based
+          Forecasting Algorithm}",
+    author   = personList(as.person("Neeraj Bokde"), 
+                        as.person("Gualberto Asencio-Cortés"),
+                        as.person("Francisco Martínez-Álvarez"),
+                        as.person("Kishore Kulat")),
+    journal  = "{The R Journal}",
+    year     = "2017",
+    doi      = "10.32614/RJ-2017-021",
+    number   = "1",
+    volume   = "9",
+    pages    = "324--333",
+    url      = "https://doi.org/10.32614/RJ-2017-021",
+    textVersion = paste(
+        "Bokde N, Ascencio-Cort'es G, Martínez-Álvarez F, Kulat K (2017).",
+        "PSF: Introduction to R Package for Pattern Sequence Based Forecasting Algorithm.",
+        "The R Journal, 9(1), 324-333. doi: 10.32614/RJ-2017-021.",
+        "URL https://doi.org/10.32614/RJ-2017-021"
+    )
+)

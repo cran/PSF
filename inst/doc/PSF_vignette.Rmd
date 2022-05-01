@@ -4,7 +4,7 @@ author: "Neeraj Bokde, Gualberto Asencio-Cortes and Francisco Martinez-Alvarez"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Introduction to Pattern Sequence based Forecasting (PSF) algorithm}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

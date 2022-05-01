@@ -5,6 +5,10 @@
 #' @param predictions A vector with previously computed forecasted values.
 #' @param cycle The number of values that conform a cycle in the time series (e.g. 24 hours per day, 12 month per year, and so on). Only used when input data is not in time series (ts) format.
 #' @param \dots Additional graphical parameters given to plot function.
+#' 
+#' @importFrom graphics points
+#' @importFrom stats is.ts ts start frequency window time
+#' 
 #' @export
 #' @examples
 #' ## Train a PSF model from the univariate time series 'nottem' (package:datasets).

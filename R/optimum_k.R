@@ -1,3 +1,7 @@
+#' 
+#' @importFrom cluster silhouette
+#' @importFrom stats dist kmeans
+#' 
 optimum_k <- function (dataset, k_values) {
 
   # Step 1. Store number of instances and their distance matrix.
